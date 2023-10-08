@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Light Bulbs ON/OFF With Sound</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="bulb-container">
+            <div class="wire"></div>
+            <div class="light" id="light1"></div>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="settings">
+            <div class="toggle on" id="toggle1"></div>
+            <h1>COLOR PICKER 1</h1>
+            <div class="picker" id="picker1"></div>
+        </div>
+    </div>
+    <audio id="audio1" src="click.mp3" autostart="false"></audio>
+
+    <div class="container">
+        <div class="bulb-container">
+            <div class="wire"></div>
+            <div class="light" id="light2"></div>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="settings">
+            <div class="toggle on" id="toggle2"></div>
+            <h1>COLOR PICKER 2</h1>
+            <div class="picker" id="picker2"></div>
+        </div>
+    </div>
+    <audio id="audio2" src="click.mp3" autostart="false"></audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+    <script>
+        var switchOn1 = true;
+        var blubOn1 = true;
+        var colorValue1 = '#fff';
+        var toggle1 = document.getElementById("toggle1");
+
+        // Initialize color picker 1
+        var colorPicker1 = new iro.ColorPicker("#picker1", {
+            width: 110,
+            color: colorValue1,
+        });
+
+        // Change bulb 1 color according to color picker 1 value
+        colorPicker1.on('color:change', function (color) {
+            colorValue1 = color.hexString;
+            if (blubOn1) {
+                changeBulbColor(colorValue1, "light1");
+            }
+        });
+
+        toggle1.onclick = function () {
+            if (!switchOn1) {
+                toggle1.classList.add('on');
+            } else {
+                toggle1.classList.remove('on');
+            }
+            switchOn1 = !switchOn1;
+            blubOn1 = !blubOn1;
+
+            if (blubOn1) {
+                changeBulbColor(colorValue1, "light1");
+            } else {
+                changeBulbColor('#5a5a5a', "light1");
+            }
+        };
+
+        var switchOn2 = true;
+        var blubOn2 = true;
+        var colorValue2 = '#fff';
+        var toggle2 = document.getElementById("toggle2");
+
+        // Initialize color picker 2
+        var colorPicker2 = new iro.ColorPicker("#picker2", {
+            width: 110,
+            color: colorValue2,
+        });
+
+        // Change bulb 2 color according to color picker 2 value
+        colorPicker2.on('color:change', function (color) {
+            colorValue2 = color.hexString;
+            if (blubOn2) {
+                changeBulbColor(colorValue2, "light2");
+            }
+        });
+
+        toggle2.onclick = function () {
+            if (!switchOn2) {
+                toggle2.classList.add('on');
+            } else {
+                toggle2.classList.remove('on');
+            }
+            switchOn2 = !switchOn2;
+            blubOn2 = !blubOn2;
+
+            if (blubOn2) {
+                changeBulbColor(colorValue2, "light2");
+            } else {
+                changeBulbColor('#5a5a5a', "light2");
+            }
+        };
+
+        function changeBulbColor(color, lightId) {
+            document.getElementById(lightId).style.setProperty('--light-color', color);
+        }
+    </script>
+</body>
+
+</html>
